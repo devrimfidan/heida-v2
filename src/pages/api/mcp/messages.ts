@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { transports } from "@/lib/mcp";
+import { getToken } from "next-auth/jwt";
 
 // We need to disable Next.js default body parser for this route
 // because SSEServerTransport expects to parse the raw body itself
@@ -12,6 +13,12 @@ export const config = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     res.status(405).send("Method Not Allowed");
+    return;
+  }
+
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET! });
+  if (!token) {
+    res.status(401).send("Unauthorized");
     return;
   }
 

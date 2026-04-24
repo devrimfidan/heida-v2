@@ -12,6 +12,7 @@ export async function updateUserRole(id: string, formData: FormData) {
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
   const role = Number(formData.get("role"));
+  if (![1, 2, 3, 4].includes(role)) throw new Error("Invalid role value");
   await db.update(users).set({ role }).where(eq(users.id, id));
   revalidatePath("/dashboard/admin/users");
 }

@@ -118,5 +118,14 @@ src/
 
 ---
 
+## Contributors
+
+| Contributor | Role |
+|---|---|
+| [Emin Devrim Fidan](https://github.com/devrimfidan) | Lead developer, architecture, domain design |
+| [Claude Sonnet 4.6](https://claude.ai) | AI pair programmer — code review, security hardening, MCP integration |
+
+---
+
 ## License
 Experimental rewrite based on the European Commission funded project — Koc University. Built with AI.

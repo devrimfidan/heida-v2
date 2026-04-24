@@ -62,23 +62,37 @@ if (!globalForMcp.mcpServer) {
     { indicatorId: z.string().describe("The UUID of the indicator to pull data for") },
     async ({ indicatorId }) => {
       const entries = await db.select().from(dataEntries).where(eq(dataEntries.indicatorId, indicatorId));
-      
-      // Fetch years for all these entries
-      const allData = await Promise.all(entries.map(async (entry) => {
-        const years = await db.select().from(dataEntryYears).where(eq(dataEntryYears.dataEntryId, entry.id));
-        
-        let deptName = entry.departmentDesc || "Unknown Unit";
-        if (entry.departmentId) {
-          const [d] = await db.select({ name: departments.name }).from(departments).where(eq(departments.id, entry.departmentId));
-          if (d) deptName = d.name;
-        }
+      if (entries.length === 0) return { content: [{ type: "text", text: "[]" }] };
 
-        return {
-          department: deptName,
-          periodType: entry.periodType,
-          visibility: entry.visibility,
-          data: years.map(y => ({ year: y.year, value: y.value }))
-        };
+      const entryIds = entries.map((e) => e.id);
+      const allYears = await db
+        .select()
+        .from(dataEntryYears)
+        .where(sql`${dataEntryYears.dataEntryId} IN ${entryIds}`); // drizzle-orm inArray might be better but sql works
+
+      // Get unique department IDs
+      const deptIds = Array.from(new Set(entries.map((e) => e.departmentId).filter((id): id is string => !!id)));
+      
+      let deptMap = new Map<string, string>();
+      if (deptIds.length > 0) {
+        const depts = await db
+          .select({ id: departments.id, name: departments.name })
+          .from(departments)
+          .where(sql`${departments.id} IN ${deptIds}`);
+        deptMap = new Map(depts.map((d) => [d.id, d.name]));
+      }
+
+      const yearsByEntry = allYears.reduce((acc, y) => {
+        if (!acc[y.dataEntryId]) acc[y.dataEntryId] = [];
+        acc[y.dataEntryId].push({ year: y.year, value: y.value });
+        return acc;
+      }, {} as Record<string, { year: string; value: string }[]>);
+
+      const allData = entries.map((entry) => ({
+        department: (entry.departmentId ? deptMap.get(entry.departmentId) : entry.departmentDesc) || "Unknown Unit",
+        periodType: entry.periodType,
+        visibility: entry.visibility,
+        data: yearsByEntry[entry.id] || [],
       }));
 
       return {

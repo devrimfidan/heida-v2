@@ -6,6 +6,7 @@ import { eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { MIN_ROLE_ADMIN } from "@/lib/constants";
 import { z } from "zod";
 
 const REVALIDATE_PATH = "/dashboard/admin/departments";
@@ -26,7 +27,7 @@ const SubDepartmentSchema = DepartmentSchema.extend({
 async function requireAdmin() {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
-  if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
+  if ((session.user.role ?? 0) < MIN_ROLE_ADMIN) throw new Error("Forbidden");
   return session;
 }
 

@@ -15,6 +15,7 @@ import {
   BookOpen,
   Plug,
 } from "lucide-react";
+import { MIN_ROLE_ADMIN } from "@/lib/constants";
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -63,7 +64,7 @@ export function Sidebar({ userRole }: { userRole: number }) {
           </Link>
         ))}
 
-        {userRole >= 4 && (
+        {userRole >= MIN_ROLE_ADMIN && (
           <>
             <div className="pt-4 pb-1 px-3">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">

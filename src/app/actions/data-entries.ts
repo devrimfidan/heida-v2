@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { MIN_ROLE_DATA_ENTRY } from "@/lib/constants";
 import { z } from "zod";
 
 const YEAR_REGEX = /^\d{4}(-\d{4})?$/;
@@ -45,7 +46,7 @@ function revalidateAll() {
 export async function createDataEntry(formData: FormData) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
-  if ((session.user.role ?? 0) < 3) throw new Error("Forbidden");
+  if ((session.user.role ?? 0) < MIN_ROLE_DATA_ENTRY) throw new Error("Forbidden");
 
   const raw = {
     indicatorId: formData.get("indicatorId"),

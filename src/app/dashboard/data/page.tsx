@@ -22,7 +22,6 @@ export default async function DataPage() {
         </p>
       </div>
       <DataEntryClient
-        goals={[]}
         groups={allGroups}
         subGroups={allSubGroups}
         indicators={allIndicators}

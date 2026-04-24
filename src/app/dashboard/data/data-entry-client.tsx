@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Plus, Trash2, ChevronRight } from "lucide-react";
 
-type Goal = { id: string; status: number; name: string };
+
 type Group = { id: string; name: string };
 type SubGroup = { id: string; name: string; groupId: string };
 type Indicator = { id: string; code: string; name: string; valueType: string; subGroupId: string };
@@ -19,7 +19,6 @@ type Department = { id: string; name: string };
 type SubDepartment = { id: string; name: string; departmentId: string };
 
 interface Props {
-  goals: Goal[];
   groups: Group[];
   subGroups: SubGroup[];
   indicators: Indicator[];
@@ -36,14 +35,12 @@ const VALUE_TYPE_LABELS: Record<string, string> = {
 };
 
 export function DataEntryClient({
-  goals,
   groups,
   subGroups,
   indicators,
   departments,
   subDepartments,
 }: Props) {
-  const [goalId, setGoalId] = useState("");
   const [groupId, setGroupId] = useState("");
   const [subGroupId, setSubGroupId] = useState("");
   const [selectedIndicator, setSelectedIndicator] = useState<Indicator | null>(null);

@@ -128,4 +128,130 @@ src/
 ---
 
 ## License
-Experimental rewrite based on the European Commission funded project — Koc University. Built with AI.
+Experimental rewrite based on the European Commission funded project — Koç University. Built with AI.
+
+---
+
+<details>
+<summary><strong>About the HEIDA Project (click to expand)</strong></summary>
+
+> [!NOTE]
+> The original project tool was published at [https://github.com/kocun/heida](https://github.com/kocun/heida) and is now archived. Not all information below may be up to date.
+
+## HEIDA Project
+
+**HEIDA** refers to **"Data driven decision making for internationalization of higher education: Bridging the gap between faculty and admin using effective communication platforms"**
+
+It is a 2 year **Erasmus+ Key Action 2 funded project (2015–2016)** led by [Koç University (Istanbul, Türkiye)](https://web.archive.org/web/20240626163625/http://www.ku.edu.tr/) and project partners: [Universidad Autonoma de Barcelona (Barcelona, Spain)](https://web.archive.org/web/20240626163625/http://www.uab.cat/web/universitat-autonoma-de-barcelona-1345467954774.html) and [International School for Social and Business Studies (Celje, Slovenia)](https://web.archive.org/web/20240626163625/http://mfdps.si/en).
+
+The aims of the project are to address three specific needs that were identified in European Higher Education Institutions:
+
+- A data collection and sharing tool for measuring and monitoring internationalisation activities
+- Bridging gaps in communication and efforts between faculty, staff, senior management and students in internationalisation activities
+- A better understanding of the demands for effective management of international activities
+
+---
+
+### Why this project?
+
+HEIDA is a 2 year project led by [Koç University](https://web.archive.org/web/20240708153256/http://www.ku.edu.tr/) (Türkiye) in collaboration with [Universidad Autonoma de Barcelona](https://web.archive.org/web/20240708153256/http://www.uab.cat/) (Spain) and [International School for Social and Business Studies](https://web.archive.org/web/20240708153256/http://mfdps.si/) (Slovenia).
+
+The project responds to two specific needs:
+
+- The need for a data collection and sharing tool or platform for the internationalisation activities of higher education institutions
+- The need to bridge the gap in communication and joint work that often exists between HEI faculty, staff, senior management and students in internationalisation efforts and activities
+
+The new tool and the stakeholder involvement process will promote the development of a more complete institutional understanding of the international dimensions and engagement of universities across Europe.
+
+---
+
+### How we will do this?
+
+The project consists of three phases:
+
+- **First phase – DESIGN:** A data tool/platform system for internationalisation of HEIs and a training module in consultation with project partners and other local and national stakeholders.
+- **Second phase – TESTING:** Feasibility of the tool/platform system on a sample of HEIs in Europe.
+- **Third phase – DISSEMINATION:** Promote the review of the results of the tool/platform system and the training module amongst HEIs and other stakeholders.
+
+---
+
+### What we expect to achieve?
+
+- Increased **awareness of the value of data and data sharing** for the development and implementation of internationalization strategies in HEIs
+- **Increased partnership and collaborative working** between administrative and academic units at each partner organisation
+- **Increased capacity** of relevant staff in data collection, analysis and sharing
+
+---
+
+### Who should follow this project?
+
+- Senior Managers at European HEIs (Presidents/Rectors/Vice Presidents or Vice-Provosts), Directors of Administrative Units
+- Senior Faculty with international research, teaching and cooperation coordination responsibilities
+- Office of International Activities/Relations staff
+- International Higher Education research organisations, associations and networks
+- Businesses with expertise and interest in data management services for education institutions
+
+---
+
+### Project Team
+
+**Project Coordinator (Koç University):**
+- Melissa Abache, Global Engagement Coordinator
+- Adil Atilgan, Software Development Management
+- Nilüfer Akpınar, Coordinator International Special Projects
+- Meline Koruk
+- Meltem Işanlar, Grants Financial Manager
+- Çağan Üçtuğ, Global Recruitment Team
+
+**Project Partners:**
+- Marta Vilalta, Director, International Relations Office, Universidad Autonoma de Barcelona (UAB)
+- Xavier Barnes, Projects, International Relations Office, Universidad Autonoma de Barcelona (UAB)
+- Dr. Georgeta Ion, Senior expert, EDO group, Universidad Autonoma de Barcelona (UAB)
+- Dr. Nada Trunk, Advisor to Dean, International School for Social and Business Studies (ISSBS)
+- Dr. Valentina Jost Leser, Researcher, International School for Social and Business Studies (ISSBS)
+- Aleš Trunk, M.Sc., Young Researcher, International School for Social and Business Studies (ISSBS)
+- Marko Smrkolj, International Relation and Project Office, International School for Social and Business Studies (ISSBS)
+
+---
+
+### Expert Panel
+
+The project's Expert Panel contributes feedback either virtually or during selected project meetings on: qualitative and quantitative analysis, tool design, reports, final project evaluation: visualization tool, data sharing tool proposal, training module.
+
+**Dr. Joaquín Gairín**, Director, EDO – The Organizational Development Group, Universidad Autonoma de Barcelona, Barcelona, Spain. [Full professional profile](https://web.archive.org/web/20240708153256/http://edo.uab.cat/en/content/edos-group)
+
+- Professor of Didactics and of Didactics and Educational Management, with broad know-how on social and educational development, organisational development, educational change processes, leadership, evaluation of programmes and institutions, ICT in training and impact evaluation.
+
+**Dr. Valerij Dermol**, Assistant Professor and Associate Dean, International School for Social and Business Studies, Celje, Slovenia. [Full professional profile](https://web.archive.org/web/20240708153256/http://mfdps.si/sites/default/files/valerij_dermol.pdf)
+
+- Economics, business training and consulting, marketing and communications, research topics related to learning in enterprises.
+
+---
+
+### Advisory Board
+
+The project's Advisory Board is responsible for monitoring delivery of project activities and achievement of results and advising on corrective measures if needed.
+
+- **Dr. Andrej Koren**, Associate Professor, International School for Social and Business Studies, Celje, Slovenia
+- **Dr. Bilgen Bilgin**, Dean of Students, Koç University, Istanbul, Türkiye
+- **Prof. Lluís Quintana Trías**, Vice-rector for International Relations, Universidad Autònoma de Barcelona
+
+---
+
+### Related Resources
+
+For measuring or evaluating internationalisation in HE, a selection of relevant projects and tools:
+
+- [NUFFIC – Existing tools for measuring internationalisation](https://web.archive.org/web/20240708173712/https://www.nuffic.nl/en/library/existing-tools-for-measuring-internationalisation.pdf)
+- [IMPI Project](https://web.archive.org/web/20240708173712/http://www.impi-project.eu/home)
+- [DELECA Project](https://web.archive.org/web/20240708173712/http://www.deleca.org/)
+- [Mapping Internationalization (MINT)](https://web.archive.org/web/20240708173712/https://www.nuffic.nl/en/expertise/quality-assurance-and-internationalisation/mapping-internationalisation-mint/)
+- [The U-Map project](https://web.archive.org/web/20240708173712/http://www.u-map.eu/)
+- [International Association of Universities – Internationalization Resource Center](https://web.archive.org/web/20240708173712/https://iau-aiu.net/)
+- [CeQuInt Project](https://web.archive.org/web/20240708173712/http://ecahe.eu/home/about/projects/cequint/)
+- [eQuatic Project](https://web.archive.org/web/20240708173712/http://www.equatic.eu/)
+- [Higher Education Data and Information Improvement Programme (HEDIIP)](https://web.archive.org/web/20240708173712/https://www.hediip.ac.uk/)
+- [Responsible use of student data in HE – Stanford CAROL and Ithaka S+R](https://web.archive.org/web/20240708173712/http://gsd.su.domains/)
+- [Free online resources on data management skills in HE](https://web.archive.org/web/20240708173712/https://heida.ku.edu.tr/wp-content/uploads/2018/08/3-4-HEIDA-Additional-free-online-resources-on-data-management-skills-in-HE-EN.pdf)
+
+</details>

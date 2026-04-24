@@ -1,5 +1,7 @@
 # HEIDA v2 (Experimental)
 
+![Overview](docs/OverView_screenshot.png)
+
 **Data-driven decision making for the internationalization of higher education — Powered by AI.**
 
 HEIDA is a modern web application that helps academic institutions collect, track, and visualize internationalization indicators across faculties, colleges, and administrative units. This version is a full architectural rewrite of the original HEIDA platform, designed to be inherently AI-ready and high-performance.
@@ -23,13 +25,29 @@ HEIDA is a modern web application that helps academic institutions collect, trac
 
 ---
 
-## Key Features
+## Visual Overview
 
-- **Modern Dashboard:** Instant page transitions and real-time data updates.
-- **Dynamic Reporting:** Filter, sort, and visualize indicators with interactive charts.
-- **AI Integration (MCP):** Native support for the Model Context Protocol, allowing AI assistants (Claude, Cursor, etc.) to securely query institutional data.
-- **Clean Architecture:** Type-safe database operations, Zod validation, and robust error handling.
-- **Role-Based Access:** Multi-tier permissions (Read-Only, Member, Editor, Admin).
+### Indicators & Data Management
+![Indicators](docs/Indicator_screenshot.png)
+*Browse and manage all 489 internationalization indicators.*
+
+### Efficient Data Entry
+![Data Entry](docs/Data_Entry_Screenshot.png)
+*Streamlined workflow for submitting unit-level data.*
+
+### Dynamic Reports & Analytics
+![Reports](docs/Reports_Screenshot.png)
+*Visualize trends with real-time charts and exportable tables.*
+
+---
+
+## Workflows in Action
+
+### User Experience & Navigation
+![User Workflow](docs/Users_screenrecord_2026.gif)
+
+### Administrative Role Management
+![Admin Workflow](docs/Admin_users_screenrecord_2026.gif)
 
 ---
 
@@ -77,19 +95,6 @@ npm run db:migrate
 npm run db:seed
 ```
 Default admin: `admin@heida.local` / `admin123`
-
----
-
-## Available scripts
-
-| Script | Description |
-|---|---|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run db:generate` | Generate migration files |
-| `npm run db:migrate` | Apply migrations to the database |
-| `npm run db:seed` | Seed from original HEIDA Excel data |
 
 ---
 

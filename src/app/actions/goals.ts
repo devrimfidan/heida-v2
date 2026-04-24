@@ -6,21 +6,28 @@ import { eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { z } from "zod";
+
+const GoalSchema = z.object({
+  name: z.string().min(1, "Name is required").max(255),
+});
 
 export async function createGoal(formData: FormData) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  const name = formData.get("name") as string;
+  const parsed = GoalSchema.parse({ name: formData.get("name") });
 
-  // Auto-assign next sort order
-  const result = await db
-    .select({ max: sql<number>`coalesce(max(${goals.sortOrder}), -1)` })
-    .from(goals);
-  const nextOrder = (result[0]?.max ?? -1) + 1;
+  // 2.6 — wrap SELECT max + INSERT in a transaction to avoid race condition
+  await db.transaction(async (tx) => {
+    const result = await tx
+      .select({ max: sql<number>`coalesce(max(${goals.sortOrder}), -1)` })
+      .from(goals);
+    const nextOrder = (result[0]?.max ?? -1) + 1;
+    await tx.insert(goals).values({ name: parsed.name, sortOrder: nextOrder });
+  });
 
-  await db.insert(goals).values({ name, sortOrder: nextOrder });
   revalidatePath("/dashboard/admin/goals");
   redirect("/dashboard/admin/goals");
 }
@@ -30,9 +37,13 @@ export async function updateGoal(id: string, formData: FormData) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  const name = formData.get("name") as string;
+  const parsed = GoalSchema.parse({ name: formData.get("name") });
 
-  await db.update(goals).set({ name }).where(eq(goals.id, id));
+  try {
+    await db.update(goals).set({ name: parsed.name }).where(eq(goals.id, id));
+  } catch (err) {
+    throw new Error("Failed to update goal");
+  }
   revalidatePath("/dashboard/admin/goals");
   redirect("/dashboard/admin/goals");
 }
@@ -42,7 +53,11 @@ export async function deleteGoal(id: string) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  await db.delete(goals).where(eq(goals.id, id));
+  try {
+    await db.delete(goals).where(eq(goals.id, id));
+  } catch (err) {
+    throw new Error("Failed to delete goal");
+  }
   revalidatePath("/dashboard/admin/goals");
 }
 
@@ -51,13 +66,17 @@ export async function reorderGoals(orderedIds: string[]) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  await db.transaction(async (tx) => {
-    for (let i = 0; i < orderedIds.length; i++) {
-      await tx
-        .update(goals)
-        .set({ sortOrder: i })
-        .where(eq(goals.id, orderedIds[i]));
-    }
-  });
+  try {
+    await db.transaction(async (tx) => {
+      for (let i = 0; i < orderedIds.length; i++) {
+        await tx
+          .update(goals)
+          .set({ sortOrder: i })
+          .where(eq(goals.id, orderedIds[i]));
+      }
+    });
+  } catch (err) {
+    throw new Error("Failed to reorder goals");
+  }
   revalidatePath("/dashboard/admin/goals");
 }

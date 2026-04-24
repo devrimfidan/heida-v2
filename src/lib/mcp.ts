@@ -41,16 +41,14 @@ if (!globalForMcp.mcpServer) {
   mcpServer.tool(
     "search_indicators",
     "Search for performance indicators by name or code to find their ID for data retrieval",
-    { query: z.string().optional().describe("Optional search term for indicator name or code") },
+    { query: z.string().max(200).optional().describe("Optional search term for indicator name or code") },
     async ({ query }) => {
-      let q = db.select().from(indicators);
-      if (query) {
-        q = q.where(or(
-          like(indicators.name, `%${query}%`),
-          like(indicators.code, `%${query}%`)
-        )) as any;
-      }
-      const results = await q.limit(20);
+      const base = db.select().from(indicators);
+      const results = await (
+        query
+          ? base.where(or(like(indicators.name, `%${query}%`), like(indicators.code, `%${query}%`)))
+          : base
+      ).limit(20);
       return {
         content: [{ type: "text", text: JSON.stringify(results, null, 2) }],
       };

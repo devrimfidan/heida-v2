@@ -6,16 +6,31 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { z } from "zod";
 
 const REVALIDATE_PATH = "/dashboard/admin/groups";
+
+const GroupSchema = z.object({
+  name: z.string().min(1, "Name is required").max(255),
+});
+
+const SubGroupSchema = z.object({
+  name: z.string().min(1, "Name is required").max(255),
+  groupId: z.string().uuid("Invalid group ID"),
+});
 
 export async function createGroup(formData: FormData) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  const name = formData.get("name") as string;
-  await db.insert(groups).values({ name });
+  const parsed = GroupSchema.parse({ name: formData.get("name") });
+
+  try {
+    await db.insert(groups).values({ name: parsed.name });
+  } catch (err) {
+    throw new Error("Failed to create group");
+  }
   revalidatePath(REVALIDATE_PATH);
   redirect(REVALIDATE_PATH);
 }
@@ -25,8 +40,13 @@ export async function updateGroup(id: string, formData: FormData) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  const name = formData.get("name") as string;
-  await db.update(groups).set({ name }).where(eq(groups.id, id));
+  const parsed = GroupSchema.parse({ name: formData.get("name") });
+
+  try {
+    await db.update(groups).set({ name: parsed.name }).where(eq(groups.id, id));
+  } catch (err) {
+    throw new Error("Failed to update group");
+  }
   revalidatePath(REVALIDATE_PATH);
   redirect(REVALIDATE_PATH);
 }
@@ -36,7 +56,11 @@ export async function deleteGroup(id: string) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  await db.delete(groups).where(eq(groups.id, id));
+  try {
+    await db.delete(groups).where(eq(groups.id, id));
+  } catch (err) {
+    throw new Error("Failed to delete group");
+  }
   revalidatePath(REVALIDATE_PATH);
 }
 
@@ -45,9 +69,16 @@ export async function createSubGroup(formData: FormData) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  const name = formData.get("name") as string;
-  const groupId = formData.get("groupId") as string;
-  await db.insert(subGroups).values({ name, groupId });
+  const parsed = SubGroupSchema.parse({
+    name: formData.get("name"),
+    groupId: formData.get("groupId"),
+  });
+
+  try {
+    await db.insert(subGroups).values({ name: parsed.name, groupId: parsed.groupId });
+  } catch (err) {
+    throw new Error("Failed to create sub-group");
+  }
   revalidatePath(REVALIDATE_PATH);
   redirect(REVALIDATE_PATH);
 }
@@ -57,9 +88,19 @@ export async function updateSubGroup(id: string, formData: FormData) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  const name = formData.get("name") as string;
-  const groupId = formData.get("groupId") as string;
-  await db.update(subGroups).set({ name, groupId }).where(eq(subGroups.id, id));
+  const parsed = SubGroupSchema.parse({
+    name: formData.get("name"),
+    groupId: formData.get("groupId"),
+  });
+
+  try {
+    await db
+      .update(subGroups)
+      .set({ name: parsed.name, groupId: parsed.groupId })
+      .where(eq(subGroups.id, id));
+  } catch (err) {
+    throw new Error("Failed to update sub-group");
+  }
   revalidatePath(REVALIDATE_PATH);
   redirect(REVALIDATE_PATH);
 }
@@ -69,6 +110,10 @@ export async function deleteSubGroup(id: string) {
   if (!session) throw new Error("Unauthorized");
   if ((session.user.role ?? 0) < 4) throw new Error("Forbidden");
 
-  await db.delete(subGroups).where(eq(subGroups.id, id));
+  try {
+    await db.delete(subGroups).where(eq(subGroups.id, id));
+  } catch (err) {
+    throw new Error("Failed to delete sub-group");
+  }
   revalidatePath(REVALIDATE_PATH);
 }

@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: heida_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: heida
+      POSTGRES_PASSWORD: heida_password
+      POSTGRES_DB: heida
+    ports:
+      - "5433:5432"       # 5433 on host to avoid clash with native Postgres
+    volumes:
+      - heida_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U heida -d heida"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: heida_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://heida:heida_password@db:5432/heida
+      AUTH_SECRET: ${AUTH_SECRET}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      AUTH_GOOGLE_ID: ${AUTH_GOOGLE_ID}
+      AUTH_GOOGLE_SECRET: ${AUTH_GOOGLE_SECRET}
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+
+volumes:
+  heida_db_data:
